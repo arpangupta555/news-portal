@@ -16,6 +16,7 @@ const displaycategory = categories => {
         categoryUl.innerHTML = `<li class="nav-item"> <button onclick="loadAllNews(${category.category_id})" type="button" class="btn">${category.category_name}</button>
 
         </li>`
+
         categoryContaienr.appendChild(categoryUl);
     });
 
@@ -36,8 +37,8 @@ const loadAllNews = async (categoryId) => {
 loadAllNews();
 
 const displayAllNews = newses => {
-    const newsContaienr = document.getElementById('all-news');
-    newsContaienr.innerHTML = '';
+    const newsContainer = document.getElementById('all-news');
+    newsContainer.innerHTML = '';
     for (const news of newses) {
 
         const newsDiv = document.createElement('div')
@@ -45,13 +46,13 @@ const displayAllNews = newses => {
         newsDiv.classList.add('mb-3');
         newsDiv.innerHTML = `
 
-        <div class="row g-0">
+        <div onclick= "loadNewsDetails('${news._id ? news._id : "No Data Avilable"}')" class="row g-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <div class="col-md-4">
-                        <img src="${news.image_url}" class="img-fluid rounded-start" alt="...">
+                        <img src="${news.image_url ? news.image_url : "No Data Avilable"})" class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">${news.title}</h5>
+                            <h5 class="card-title">${news.title ? news.title : "No Data Avilable"}</h5>
                             <p class="card-text">${news.details.slice(0, 200)}...</p>
                             
 
@@ -59,14 +60,14 @@ const displayAllNews = newses => {
                                     <div class="d-flex justify-content-between mt-4">
                                         <img src="${news.author.img}" class="rounded-circle" style="height:50px;">
                                     <div>
-                                        <p> ${news.author.name} </p>
-                                        <p> ${news.author.published_date} </p>
+                                        <p> ${news.author.name ? news.author.name : "No Data Avilable"} </p>
+                                        <p> ${news.author.published_date ? news.author.published_date : "No Data Avilable"} </p>
                                         </div>
                                     </div>
                         
                                     <div class="class="d-flex justify-content-between mt-4 px-3">
                                        <i class="fa-regular fa-eye">  </i>
-                                      <h> ${news.total_view}</h>
+                                      <h> ${news.total_view ? news.author.published_date : "No Data Avilable"}</h>
                                       
                                       
                                     </div>
@@ -77,7 +78,7 @@ const displayAllNews = newses => {
                                 </div>
                                 <div>
                                 
-                                <button onclick="loadNewsDetails(${news._id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button  type="button" class="btn btn-primary" >
                                 See More
                             </button>
                     
@@ -90,7 +91,8 @@ const displayAllNews = newses => {
                     </div>
                 </div>
     `
-        newsContaienr.appendChild(newsDiv);
+
+        newsContainer.appendChild(newsDiv);
     };
 
 
@@ -106,32 +108,47 @@ const loadNewsDetails = async (newsId) => {
 
 const displayNewsDetails = newsDetails => {
     const newsContaienr = document.getElementById('exampleModal');
+
+
     newsDetails.forEach(newsDetail => {
 
+        newsContaienr.innerHTML = '';
         const newsDetailsDiv = document.createElement('div')
         newsDetailsDiv.classList.add('modal-dialog');
         newsDetailsDiv.innerHTML = `
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">${newsDetail.title}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-        <img src="${newsDetail.image_url}" class="img-fluid rounded-start" alt="...">
-            <p>${newsDetail.details} </p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">${newsDetail.title ? newsDetail.title : "No Data Avilable"}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <img src="${newsDetail.image_url ? newsDetail.image_url : "No Data Avilable"}" class="img-fluid rounded-start" alt="...">
+                <p>${newsDetail.details ? newsDetail.details : "No Data Avilable"} </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
+            </div>
         </div>
-    </div>
 
-        `
+            `
         newsContaienr.appendChild(newsDetailsDiv);
 
     });
 
 
+}
+
+
+
+const toggleSpinner = isloading => {
+    const loaderSection = decument.getElementById('loader');
+    if (isloading) {
+        loaderSection.classList.remove('d-none')
+    }
+    else {
+        loaderSection.classList.add('d-none');
+    }
 }
 
 
