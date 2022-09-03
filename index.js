@@ -60,7 +60,8 @@ const loadAllNews = async (categoryId) => {
 const displayAllNews = newses => {
     const newsContainer = document.getElementById('all-news');
     newsContainer.innerHTML = '';
-    console.log(newses.length)
+    const foundItems = document.getElementById('found-items');
+    foundItems.innerText = newses.length + `  Items found in this catagory`;
 
     const noNewsFound = document.getElementById('no-news-found');
     if (newses.length === 0) {
