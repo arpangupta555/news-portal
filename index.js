@@ -126,8 +126,7 @@ const displayAllNews = newses => {
                 </div>
     `
 
-        const getNum = document.getElementById("showNumber")
-        getNum.innerText = news.length;
+
 
         newsContainer.appendChild(newsDiv);
     }
