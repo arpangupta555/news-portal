@@ -39,16 +39,14 @@ const loadAllNews = async (categoryId) => {
     const url = `https://openapi.programming-hero.com/api/news/category/0${categoryId}`;
 
 
-
-
-
-
     toggleSpinner(true);
 
     try {
         const response = await fetch(url);
         const data = await response.json();
         displayAllNews(data.data);
+
+
     }
     catch (error) {
         console.log(error);
@@ -62,7 +60,7 @@ const loadAllNews = async (categoryId) => {
 const displayAllNews = newses => {
     const newsContainer = document.getElementById('all-news');
     newsContainer.innerHTML = '';
-
+    console.log(newses.length)
 
     const noNewsFound = document.getElementById('no-news-found');
     if (newses.length === 0) {
