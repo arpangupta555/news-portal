@@ -1,9 +1,17 @@
 const loadAllCategories = async () => {
 
     const url = `https://openapi.programming-hero.com/api/news/categories`;
-    const response = await fetch(url);
-    const data = await response.json();
-    displaycategory(data.data.news_category)
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        displaycategory(data.data.news_category)
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+
 
 }
 
@@ -23,22 +31,48 @@ const displaycategory = categories => {
 
 }
 
-loadAllCategories();
+
 
 
 const loadAllNews = async (categoryId) => {
 
     const url = `https://openapi.programming-hero.com/api/news/category/0${categoryId}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    displayAllNews(data.data)
+
+
+
+
+
+
+    toggleSpinner(true);
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        displayAllNews(data.data);
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+
 
 }
-loadAllNews();
+
 
 const displayAllNews = newses => {
     const newsContainer = document.getElementById('all-news');
     newsContainer.innerHTML = '';
+
+
+    const noNewsFound = document.getElementById('no-news-found');
+    if (newses.length === 0) {
+        noNewsFound.classList.remove('d-none')
+
+    }
+    else {
+        noNewsFound.classList.add('d-none')
+    }
+
     for (const news of newses) {
 
         const newsDiv = document.createElement('div')
@@ -48,7 +82,7 @@ const displayAllNews = newses => {
 
         <div onclick= "loadNewsDetails('${news._id ? news._id : "No Data Avilable"}')" class="row g-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <div class="col-md-4">
-                        <img src="${news.image_url ? news.image_url : "No Data Avilable"})" class="img-fluid rounded-start" alt="...">
+                        <img src="${news.image_url ? news.image_url : "No Data Avilable"}" class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -58,7 +92,7 @@ const displayAllNews = newses => {
 
                                 <div class="d-flex justify-content-between mt-4">
                                     <div class="d-flex justify-content-between mt-4">
-                                        <img src="${news.author.img}" class="rounded-circle" style="height:50px;">
+                                        <img src="${news.author.img ? news.author.img : "No Data Avilable"}" class="rounded-circle" style="height:50px;">
                                     <div>
                                         <p> ${news.author.name ? news.author.name : "No Data Avilable"} </p>
                                         <p> ${news.author.published_date ? news.author.published_date : "No Data Avilable"} </p>
@@ -93,17 +127,28 @@ const displayAllNews = newses => {
     `
 
         newsContainer.appendChild(newsDiv);
-    };
+    }
 
+    toggleSpinner(false);
 
-
-};
+}
 
 const loadNewsDetails = async (newsId) => {
     const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    displayNewsDetails(data.data)
+
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        displayNewsDetails(data.data)
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+
+
+
 }
 
 const displayNewsDetails = newsDetails => {
@@ -141,15 +186,15 @@ const displayNewsDetails = newsDetails => {
 
 
 
-const toggleSpinner = isloading => {
-    const loaderSection = decument.getElementById('loader');
-    if (isloading) {
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoading) {
         loaderSection.classList.remove('d-none')
     }
     else {
-        loaderSection.classList.add('d-none');
+        loaderSection.classList.add('d-none')
     }
 }
 
 
-// https://openapi.programming-hero.com/api/news/0${newsId}`
+loadAllCategories();
