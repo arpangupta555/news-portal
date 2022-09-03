@@ -33,12 +33,13 @@ const loadAllNews = async (categoryId) => {
     displayAllNews(data.data)
 
 }
+loadAllNews();
 
 const displayAllNews = newses => {
     const newsContaienr = document.getElementById('all-news');
     newsContaienr.innerHTML = '';
     for (const news of newses) {
-        console.log(news)
+
         const newsDiv = document.createElement('div')
         newsDiv.classList.add('card');
         newsDiv.classList.add('mb-3');
@@ -66,6 +67,8 @@ const displayAllNews = newses => {
                                     <div class="class="d-flex justify-content-between mt-4 px-3">
                                        <i class="fa-regular fa-eye">  </i>
                                       <h> ${news.total_view}</h>
+                                      
+                                      
                                     </div>
                                 
                                 <div>
@@ -74,7 +77,9 @@ const displayAllNews = newses => {
                                 </div>
                                 <div>
                                 
-                                <button type="button" class="btn btn-primary">Show More</button>
+                                <button onclick="loadNewsDetails(${news._id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                See More
+                            </button>
                     
                                  </div>
 
@@ -92,7 +97,42 @@ const displayAllNews = newses => {
 
 };
 
+const loadNewsDetails = async (newsId) => {
+    const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    displayNewsDetails(data.data)
+}
+
+const displayNewsDetails = newsDetails => {
+    const newsContaienr = document.getElementById('exampleModal');
+    newsDetails.forEach(newsDetail => {
+
+        const newsDetailsDiv = document.createElement('div')
+        newsDetailsDiv.classList.add('modal-dialog');
+        newsDetailsDiv.innerHTML = `
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">${newsDetail.title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <img src="${newsDetail.image_url}" class="img-fluid rounded-start" alt="...">
+            <p>${newsDetail.details} </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+        </div>
+    </div>
+
+        `
+        newsContaienr.appendChild(newsDetailsDiv);
+
+    });
 
 
+}
 
-loadAllNews();
+
+// https://openapi.programming-hero.com/api/news/0${newsId}`
