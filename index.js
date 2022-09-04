@@ -57,7 +57,7 @@ const loadAllNews = async (categoryId) => {
 }
 
 
-const displayAllNews = newses => {
+const displayAllNews = async newses => {
 
     const sorting = newses.sort((a, b) => {
         return b.total_view - a.total_view;
@@ -205,3 +205,4 @@ const toggleSpinner = isLoading => {
 
 
 loadAllCategories();
+loadAllNews('1')
