@@ -58,6 +58,12 @@ const loadAllNews = async (categoryId) => {
 
 
 const displayAllNews = newses => {
+
+    const sorting = newses.sort((a, b) => {
+        return b.total_view - a.total_view;
+    });
+
+
     const newsContainer = document.getElementById('all-news');
     newsContainer.innerHTML = '';
     const foundItems = document.getElementById('found-items');
