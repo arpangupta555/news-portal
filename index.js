@@ -61,7 +61,7 @@ const displayAllNews = newses => {
     const newsContainer = document.getElementById('all-news');
     newsContainer.innerHTML = '';
     const foundItems = document.getElementById('found-items');
-    foundItems.innerText = newses.length + `  Items found in this catagory`;
+    foundItems.innerText = newses.length + `  Items found in this Category`;
 
     const noNewsFound = document.getElementById('no-news-found');
     if (newses.length === 0) {
@@ -100,14 +100,14 @@ const displayAllNews = newses => {
                         
                                     <div class="class="d-flex justify-content-between mt-4 px-3">
                                        <i class="fa-regular fa-eye">  </i>
-                                      <h> ${news.total_view ? news.author.published_date : "No Data Avilable"}</h>
+                                      <h> ${news.total_view ? news.total_view : "No Data Avilable"}</h>
                                       
                                       
                                     </div>
                                 
                                 <div>
                                 
-                                    <i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
                                 </div>
                                 <div>
                                 
